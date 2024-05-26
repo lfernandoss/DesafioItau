@@ -1,0 +1,40 @@
+version: '3'
+services:
+  wiremock:
+    image: rodolpheche/wiremock:2.30.1
+    ports:
+      - "9090:8080"
+    volumes:
+      - ./wiremock/mappings:/home/wiremock/mappings
+
+  localstack:
+    image: localstack/localstack
+    hostname: localstack
+    ports:
+      - "127.0.0.1:4566:4566"            # LocalStack Gateway
+    environment:
+      - SKIP_SSL_CERT_DOWNLOAD=1
+      - SERVICES=sqs,dynamodb
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - AWS_DEFAULT_REGION=us-east-1
+      - AWS_ACCESS_KEY_ID=ANUJDEKAVADIYAEXAMPLE
+      - AWS_SECRET_ACCESS_KEY=2QvM4/Tdmf38SkcD/qalvXO4EXAMPLEKEY
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "./scripts/init-aws.sh:/etc/localstack/init/ready.d/init-aws.sh"
+
+  app:
+    depends_on:
+      - localstack
+      - wiremock
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    working_dir: /usr/src/transferencia
+    container_name: transferencia
+    restart: on-failure
+    ports:
+      - "8080:8080"
+
+    stdin_open: true
+    tty: true
