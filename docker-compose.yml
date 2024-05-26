@@ -23,18 +23,4 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock"
       - "./scripts/init-aws.sh:/etc/localstack/init/ready.d/init-aws.sh"
 
-  app:
-    depends_on:
-      - localstack
-      - wiremock
-    build:
-      context: ./
-      dockerfile: Dockerfile
-    working_dir: /usr/src/transferencia
-    container_name: transferencia
-    restart: on-failure
-    ports:
-      - "8080:8080"
-
-    stdin_open: true
-    tty: true
+ 
