@@ -23,4 +23,3 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock"
       - "./scripts/init-aws.sh:/etc/localstack/init/ready.d/init-aws.sh"
 
- 

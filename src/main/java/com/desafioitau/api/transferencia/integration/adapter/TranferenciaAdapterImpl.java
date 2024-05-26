@@ -14,6 +14,7 @@ import com.desafioitau.api.transferencia.domain.ports.out.TranferenciaAdapterPor
 import com.desafioitau.api.transferencia.integration.model.Response.ClienteResponse;
 import com.desafioitau.api.transferencia.integration.model.Response.ContaResponse;
 
+import io.github.resilience4j.retry.annotation.Retry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -40,18 +41,21 @@ public class TranferenciaAdapterImpl implements TranferenciaAdapterPort {
     private int tentativas;
 
     @Override
+    @Retry(name = "consultarCliente")
     public Cliente consultarCliente(String idCliente) {
         ClienteResponse clienteResponse = clienteAPI.consultarCliente(idCliente);
         return (mapper.toDomainClienteResponse(clienteResponse));
     }
 
     @Override
+    @Retry(name = "consultarConta")
     public Conta consultarConta(String idConta) {
        ContaResponse contaResponse = contaAPI.consultarConta(idConta);
             return  mapper.toDomainContaResponse(contaResponse);
     }
 
     @Override
+    @Retry(name = "transferirValor")
     public void transferirValor(TransacaoDTO transacaoDTO) {
         try {
             contaAPI.transferirSaldo(mapper.toTransacaoRequest(transacaoDTO));
@@ -62,6 +66,7 @@ public class TranferenciaAdapterImpl implements TranferenciaAdapterPort {
     }
 
     @Override
+    @Retry(name = "transferirValor")
     public void processarBacen(TransacaoDTO transacaoDTO) {
         try {
             tentativas = 0;
