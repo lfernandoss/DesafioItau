@@ -5,12 +5,13 @@
 ![Arquitetura](img/arquiteturaprojeto.png "Arquitetura")
 
 ## Arquitetura De Soluçao Atual
-![Arquitetura](img/arquitetura atual.png "Arquitetura1")
+![Arquitetura](img/arquiteturaatual.png "Arquitetura1")
 
 ## Arquitetura De Soluçao Final
 ![Arquitetura](img/DesafioItau.png "Arquitetura2")
 
 </div>
+
 
 # Desenvolvimento e Deploy
 
