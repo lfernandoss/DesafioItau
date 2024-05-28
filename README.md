@@ -45,6 +45,17 @@ Através desses detalhes você pode concluir que o conceito da Clean Architectur
   - http://localhost:9090/notificacoes
 - LocalStack
   - http://localhost:4566
+
+## Melhorias a serem implementadas 
+- Resiliencia
+  - Colocar fallback nos retrys
+- Cache
+  - Implementar Redis com local stack e colocar cache na API de Clientes
+- Swagger
+  - Documentar os endpoints com swagger
+- Testes
+  - Evoluir os testes de integraçao com BDD e cucumber
+  - 
 # Desenvolvimento e Deploy
 
 
