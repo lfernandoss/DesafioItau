@@ -55,7 +55,7 @@ Através desses detalhes você pode concluir que o conceito da Clean Architectur
   - Documentar os endpoints com swagger
 - Testes
   - Evoluir os testes de integraçao com BDD e cucumber
-  - 
+  
 # Desenvolvimento e Deploy
 
 
