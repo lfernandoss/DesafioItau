@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient(url= "http://localhost:9090/" , name = "ContaAPI")
+@FeignClient(url= "${url.conta}" , name = "ContaAPI")
 public interface ContaAPI {
 
     @GetMapping("contas/{IdConta}")

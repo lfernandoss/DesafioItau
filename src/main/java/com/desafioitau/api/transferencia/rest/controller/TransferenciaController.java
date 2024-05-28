@@ -31,7 +31,7 @@ public class TransferenciaController {
     private TransacaoMapper mapper;
 
     @PostMapping
-    @Timed(value = "transferencia.efetuarTransferencia")
+    @Timed(value = "transferencia.efetuarTransferencia", percentiles = {0.5, 0.95, 0.99})
     public ResponseEntity<TransferenciaResponseDTO> efetuarTransferencia(@RequestBody TransferenciaRequestDTO request)
     {
         log.info("Validar campos idCLiente {}", request.getIdCliente());

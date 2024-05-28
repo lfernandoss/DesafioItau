@@ -19,7 +19,7 @@ public class SQSSendService {
     private final QueueMessagingTemplate messagingTemplate;
 
     public void enviarMsg(TransacaoDTO message) {
-        log.info("Notifying queue {}", fila);
+        log.info("Envio de cliente para ser processados pelo Bacen idConta {}", message.getConta().getIdOrigem());
         messagingTemplate.convertAndSend(fila, message);
     }
 }

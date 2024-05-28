@@ -13,26 +13,68 @@
 </div>
 
 
+## Fundamentos teóricos
+
+> A Clean Architecture esclareceu as responsabilidades de cada área da nossa aplicação, impondo limites arquiteturais através de regras imutáveis, exceto quando há alguma relação com o negócio. Geralmente essas regras são sólidas e geram uma estabilidade maior no coração da aplicação. Esse padrão foi chamado de Enterprise Business Rules ou Entidades, onde ficam as regras de negócio. 
+Através desses detalhes você pode concluir que o conceito da Clean Architecture é uma forma de desenhar o software com limites arquiteturais bem claros, para torná-lo durável e também para facilitar a troca de componentes no coração da aplicação.
+##  Pré -requisitos
+
+- [ `Java 17+` ](https://www.oracle.com/java/technologies/downloads/#java11)
+- [ `Docker` ](https://www.docker.com/)
+- [ `Docker-Compose` ](https://docs.docker.com/compose/install/)
+
+
+
+
+## Stack
+- **Feing** chamadas de API
+- **resilience4j** Resiliência de aplicações
+- **Prometheus** Monitoramento de métricas
+- **log4j** Log de aplicações
+- **LocalStack** Mock de serviços AWS
+
+## Links
+
+- Prometheus
+  - http://localhost:8080/actuator/prometheus
+- Api Clientes
+  - http://localhost:9090/clientes
+- Api Conta
+  - http://localhost:9090/contas
+- Api Bacen
+  - http://localhost:9090/notificacoes
+- LocalStack
+  - http://localhost:4566
 # Desenvolvimento e Deploy
 
-Instruções detalhadas para desenvolvimento local, testes e deploy utilizando Docker e Docker Compose.
+
 
 ## Passo 1: Preparação do Ambiente
 
 Clone o repositório do projeto para sua máquina local usando o Git:
 
 ```bash
-git clone https://github.com/mllcarvalho/DesafioItau.git
+git clone https://github.com/lfernandoss/DesafioItau.git
 cd DesafioItau
 ```
 
 ## Passo 2: Construção dos Containers com Docker Compose
 
-Na raiz do projeto, onde o arquivo docker-compose.yml está localizado, execute o comando abaixo para construir e iniciar todos o container do Wiremock definido no Docker Compose:
+Na raiz do projeto, onde o arquivo docker-compose.yml está localizado, execute o comando abaixo para construir e iniciar todos os containers do Wiremock e localStack definido no Docker Compose:
 
 ```bash
 docker-compose up --build -d
 ```
+
+## Passo 3: Baixar as Dependências do Projeto e Executar a Aplicação
+
+Utilizando o Maven, baixe as dependências do projeto e execute a aplicação:
+
+
+```bash
+mvn clean install 
+```
+
 
 ## GET Mock Client
 

@@ -50,10 +50,8 @@ class TransferenciaServicePortImplTest {
     @Test
     void shouldProcessTransferenciaWithNoErrors() {
         Transferencia transferencia =  Fixture.from(Transferencia.class).gimme("create");
-        Cliente cliente =  Fixture.from(Cliente.class).gimme("create");
         Conta contaCliente =  Fixture.from(Conta.class).gimme("create");
 
-        when(transferenciaAdapter.consultarCliente(anyString())).thenReturn(cliente);
         when(transferenciaAdapter.consultarConta(anyString())).thenReturn(contaCliente);
 
         transferenciaService.processarTransferencia(transferencia);
@@ -65,11 +63,9 @@ class TransferenciaServicePortImplTest {
     @Test
     void shouldThrowErrorWhenContaInativa() {
         Transferencia transferencia =  Fixture.from(Transferencia.class).gimme("create");
-        Cliente cliente =  Fixture.from(Cliente.class).gimme("create");
         Conta contaCliente =  Fixture.from(Conta.class).gimme("create");
         contaCliente.setAtivo(false);
 
-        when(transferenciaAdapter.consultarCliente(anyString())).thenReturn(cliente);
         when(transferenciaAdapter.consultarConta(anyString())).thenReturn(contaCliente);
 
         assertThrows(ValidaStatusException.class, () -> transferenciaService.processarTransferencia(transferencia));
@@ -78,12 +74,10 @@ class TransferenciaServicePortImplTest {
     @Test
     void shouldThrowErrorWhenSaldoInsuficiente() {
         Transferencia transferencia =  Fixture.from(Transferencia.class).gimme("create");
-        Cliente cliente =  Fixture.from(Cliente.class).gimme("create");
         Conta contaCliente =  Fixture.from(Conta.class).gimme("create");
         transferencia.setValor(10000.0);
 
 
-        when(transferenciaAdapter.consultarCliente(anyString())).thenReturn(cliente);
         when(transferenciaAdapter.consultarConta(anyString())).thenReturn(contaCliente);
 
         assertThrows(ValidaSaldoException.class, () -> transferenciaService.processarTransferencia(transferencia));

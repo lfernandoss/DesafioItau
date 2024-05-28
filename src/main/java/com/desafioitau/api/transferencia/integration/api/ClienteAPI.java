@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 
-@FeignClient(url= "http://localhost:9090/" , name = "ClienteAPI")
+@FeignClient(url= "${url.cliente}" , name = "ClienteAPI")
 public interface ClienteAPI {
 
     @GetMapping(value = "clientes/{idCliente}" , produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)

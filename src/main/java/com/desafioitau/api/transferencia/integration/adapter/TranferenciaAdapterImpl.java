@@ -15,6 +15,7 @@ import com.desafioitau.api.transferencia.integration.model.Response.ClienteRespo
 import com.desafioitau.api.transferencia.integration.model.Response.ContaResponse;
 
 import io.github.resilience4j.retry.annotation.Retry;
+import io.micrometer.core.annotation.Timed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -38,21 +39,30 @@ public class TranferenciaAdapterImpl implements TranferenciaAdapterPort {
 
     private static final int TOO_MANY_REQUESTS = 429;
 
-    private int tentativas;
+
 
     @Override
     @Retry(name = "consultarCliente")
-    public Cliente consultarCliente(String idCliente) {
-        ClienteResponse clienteResponse = clienteAPI.consultarCliente(idCliente);
-        return (mapper.toDomainClienteResponse(clienteResponse));
+    public void consultarCliente(String idCliente) {
+        try {
+            ClienteResponse clienteResponse = clienteAPI.consultarCliente(idCliente);
+        } catch (FeignException e) {
+            throw new RuntimeException("Erro ao consultar cliente");
+        }
     }
+
 
     @Override
     @Retry(name = "consultarConta")
     public Conta consultarConta(String idConta) {
-       ContaResponse contaResponse = contaAPI.consultarConta(idConta);
+        try {
+            ContaResponse contaResponse = contaAPI.consultarConta(idConta);
             return  mapper.toDomainContaResponse(contaResponse);
+        } catch (FeignException e) {
+            throw new RuntimeException("Erro ao consultar conta");
+        }
     }
+
 
     @Override
     @Retry(name = "transferirValor")
@@ -65,11 +75,11 @@ public class TranferenciaAdapterImpl implements TranferenciaAdapterPort {
 
     }
 
+
     @Override
-    @Retry(name = "transferirValor")
+    @Retry(name = "processarBacen")
     public void processarBacen(TransacaoDTO transacaoDTO) {
         try {
-            tentativas = 0;
             bacenAPI.informarTransacao(mapper.toTransacaoRequest(transacaoDTO));
         }catch (FeignException e) {
 
